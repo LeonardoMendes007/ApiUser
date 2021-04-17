@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mende\\Documents\\leo\\dotnet\\ApiUser\\ApiUser.csproj": {}
+    "C:\\Users\\Leonardo\\Documents\\leo\\dotnet\\ApiUser\\ApiUser.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mende\\Documents\\leo\\dotnet\\ApiUser\\ApiUser.csproj": {
+    "C:\\Users\\Leonardo\\Documents\\leo\\dotnet\\ApiUser\\ApiUser.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mende\\Documents\\leo\\dotnet\\ApiUser\\ApiUser.csproj",
+        "projectUniqueName": "C:\\Users\\Leonardo\\Documents\\leo\\dotnet\\ApiUser\\ApiUser.csproj",
         "projectName": "ApiUser",
-        "projectPath": "C:\\Users\\mende\\Documents\\leo\\dotnet\\ApiUser\\ApiUser.csproj",
-        "packagesPath": "C:\\Users\\mende\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mende\\Documents\\leo\\dotnet\\ApiUser\\obj\\",
+        "projectPath": "C:\\Users\\Leonardo\\Documents\\leo\\dotnet\\ApiUser\\ApiUser.csproj",
+        "packagesPath": "C:\\Users\\Leonardo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Leonardo\\Documents\\leo\\dotnet\\ApiUser\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\mende\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Leonardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,6 +40,18 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.1.1, )"
+            },
+            "Microsoft.AspNetCore.JsonPatch": {
+              "target": "Package",
+              "version": "[5.0.5, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.5, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.5, )"

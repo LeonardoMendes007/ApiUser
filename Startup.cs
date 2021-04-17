@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 
 namespace ApiUser
 {
@@ -36,6 +37,12 @@ namespace ApiUser
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiUser", Version = "v1" });
             });
+
+            services.AddControllers().AddNewtonsoftJson(x => {
+                x.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IUserService, UserService>();
         }

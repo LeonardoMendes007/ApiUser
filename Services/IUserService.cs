@@ -8,9 +8,11 @@ namespace ApiUser.Services{
 
         IEnumerable<User> findAll();
         User findById(int id);
-        User save(User user);
-        void delete(int id);    
-        void update(int id, User user);
+        void save(User user);
+        void delete(User user);    
+        void update(User user);
+
+        public bool saveChanges();
         
         
     }

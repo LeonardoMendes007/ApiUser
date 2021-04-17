@@ -6,6 +6,9 @@ namespace ApiUser.Models
 
     public class User
     {
+        public User()
+        {
+        }
         public User(int id, string name, string surname, int age, DateTime creationDate)
         {
             this.Id = id;

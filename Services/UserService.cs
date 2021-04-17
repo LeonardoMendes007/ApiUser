@@ -11,13 +11,14 @@ namespace ApiUser.Services
     public class UserService : IUserService
     {
 
-       private readonly ApiUserContext _context;
+        private readonly ApiUserContext _context;
 
-       public UserService(ApiUserContext context){
+        public UserService(ApiUserContext context)
+        {
 
-           this._context = context;
+            this._context = context;
 
-       }
+        }
         public IEnumerable<User> findAll()
         {
             return _context.Users.ToList();
@@ -28,22 +29,36 @@ namespace ApiUser.Services
             return _context.Users.Find(id);
         }
 
-        public User save(User user)
+        public void save(User user)
         {
-            throw new System.NotImplementedException();
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            user.CreationDate = DateTime.Now;
+            _context.Users.Add(user);
+            
+            //retornar id ou usar para redirect
         }
 
-        public void update(int id, User user)
+        public void update(User user)
         {
-            throw new System.NotImplementedException();
+            
         }
 
 
-        public void delete(int id)
+        public void delete(User user)
         {
-            throw new System.NotImplementedException();
+            if(user == null){
+               throw new ArgumentNullException(nameof(user));   
+            }
+            _context.Users.Remove(user);
         }
 
-
+        public bool saveChanges()
+        {
+            return (_context.SaveChanges() >= 0);
+        }
     }
 }
