@@ -19,9 +19,10 @@ namespace ApiUser.Services
             this._context = context;
 
         }
-        public IEnumerable<User> findAll()
+        public IEnumerable<User> findAll()  
         {
-            return _context.Users.ToList();
+                return _context.Users.ToList();
+
         }
 
         public User findById(int id)
@@ -31,27 +32,24 @@ namespace ApiUser.Services
 
         public void save(User user)
         {
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
 
             user.CreationDate = DateTime.Now;
             _context.Users.Add(user);
-            
+
             //retornar id ou usar para redirect
         }
 
         public void update(User user)
         {
-            
+
         }
 
 
         public void delete(User user)
         {
-            if(user == null){
-               throw new ArgumentNullException(nameof(user));   
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
             }
             _context.Users.Remove(user);
         }
