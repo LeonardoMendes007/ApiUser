@@ -7,6 +7,8 @@ using AutoMapper;
 using ApiUser.Dtos;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Net;
+using ApiUser.Exceptions;
 
 namespace ApiUser.Controllers
 {
@@ -32,7 +34,7 @@ namespace ApiUser.Controllers
         {
 
             IEnumerable<User> users = _userService.findAll();
-            _logger.LogInformation($"GET:/api/users - 200 OK at {DateTime.Now}");
+            _logger.LogInformation($"GET:{Request.Path} - 200 OK at {DateTime.Now}");        
 
             return Ok(_mapper.Map<IEnumerable<UserReadDto>>(users));
 
@@ -45,11 +47,10 @@ namespace ApiUser.Controllers
 
             if (user == null)
             {
-                _logger.LogWarning($"GET:/api/users/{id} - 404 NotFound at {DateTime.Now}");
-                return NotFound();
+                _logger.LogWarning($"GET:{Request.Path} - 404 NotFound at {DateTime.Now}");
+                return NotFound(CustomErrors.NotFound($"There is no resource with id = {id}", Request));
             }
-
-            _logger.LogInformation($"GET:/api/users/{id} - 200 OK at {DateTime.Now}");
+            _logger.LogInformation($"GET:{Request.Path} - 200 OK at {DateTime.Now}");
             return Ok(_mapper.Map<UserReadDto>(user));
 
         }
@@ -62,8 +63,8 @@ namespace ApiUser.Controllers
 
             if (userDto == null)
             {
-                _logger.LogWarning($"POST:/api/users (nome={user.Name};surname={user.Surname};age={user.Age}) - 400 BadRequest at {DateTime.Now}");
-                return BadRequest();
+                _logger.LogWarning($"POST:{Request.Path} (nome={user.Name};surname={user.Surname};age={user.Age}) - 400 BadRequest at {DateTime.Now}");
+                return BadRequest(CustomErrors.BadRequest($"transaction not successful", Request));
             }
 
             _userService.save(user);
@@ -71,7 +72,7 @@ namespace ApiUser.Controllers
 
             UserReadDto userReadDto = _mapper.Map<UserReadDto>(user);
 
-            _logger.LogInformation($"POST:/api/users (nome={user.Name};surname={user.Surname};age={user.Age}) - 201 Created at {DateTime.Now}");
+            _logger.LogInformation($"POST:{Request.Path} (nome={user.Name};surname={user.Surname};age={user.Age}) - 201 Created at {DateTime.Now}");
 
             return CreatedAtRoute(nameof(getUserById), new { Id = userReadDto.Id }, userReadDto);
         }
@@ -84,8 +85,8 @@ namespace ApiUser.Controllers
 
             if (userModelFromRepo == null)
             {
-                _logger.LogWarning($"PUT:/api/users/{id} (nome={userDto.Name};surname={userDto.Surname};age={userDto.Age}) - 404 NotFound at {DateTime.Now}");
-                return NotFound();
+                _logger.LogWarning($"PUT:{Request.Path}(nome={userDto.Name};surname={userDto.Surname};age={userDto.Age}) - 404 NotFound at {DateTime.Now}");
+                return NotFound(CustomErrors.NotFound($"Resource with id = {id}", Request));
             }
 
             _mapper.Map(userDto, userModelFromRepo);
@@ -94,7 +95,7 @@ namespace ApiUser.Controllers
 
             _userService.saveChanges();
 
-            _logger.LogInformation($"PUT:/api/users/{id} (nome={userDto.Name};surname={userDto.Surname};age={userDto.Age}) - 200 OK at {DateTime.Now}");
+            _logger.LogInformation($"PUT:{Request.Path} (nome={userDto.Name};surname={userDto.Surname};age={userDto.Age}) - 200 OK at {DateTime.Now}");
 
             return NoContent();
         }
@@ -106,13 +107,13 @@ namespace ApiUser.Controllers
             User userModelFromRepo = _userService.findById(id);
             if (userModelFromRepo == null)
             {
-                _logger.LogWarning($"DELETE:/api/users/{id} - 404 NotFound at {DateTime.Now}");
-                return NotFound();
+                _logger.LogWarning($"DELETE:{Request.Path} - 404 NotFound at {DateTime.Now}");
+                return NotFound(CustomErrors.NotFound($"Resource with id = {id}", Request));
             }
             _userService.delete(userModelFromRepo);
             _userService.saveChanges();
 
-            _logger.LogWarning($"DELETE:/api/users/{id} - 204 NoContent at {DateTime.Now}");
+            _logger.LogWarning($"DELETE:{Request.Path} - 204 NoContent at {DateTime.Now}");
 
             return NoContent();
 
