@@ -1,12 +1,12 @@
 using ApiUser.Dtos;
-using ApiUser.Models;
+using ApiUser.Entities;
 using AutoMapper;
 
-namespace ApiUser.Profiles{
+namespace ApiUser.AutoMapper{
 
-    public class ApiUserProfile : Profile{
+    public class AutoMapperSetup : Profile{
 
-        public ApiUserProfile(){
+        public AutoMapperSetup(){
 
             CreateMap<User,UserReadDto>();
             CreateMap<UserCreateDto,User>();

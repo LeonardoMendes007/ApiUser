@@ -2,7 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ApiUser.Models;
+using System.Threading.Tasks;
+using ApiUser.Entities;
 using ApiUser.Repository;
 
 namespace ApiUser.Services
@@ -15,37 +16,37 @@ namespace ApiUser.Services
 
         public UserService(ApiUserContext context)
         {
-
             this._context = context;
-
         }
-        public IEnumerable<User> findAll()  
+        public IEnumerable<User> FindAll()  
         {
-                return _context.Users.ToList();
-
+            return _context.Users.ToList();
         }
 
-        public User findById(int id)
+        public async Task<User> FindByIdAsync(int id)
         {
-            return _context.Users.Find(id);
+            return await _context.Users.FindAsync(id);
         }
 
-        public void save(User user)
+        public async Task SaveAsync(User user)
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
 
             user.CreationDate = DateTime.Now;
-            _context.Users.Add(user);
-
-            //retornar id ou usar para redirect
+            await _context.Users.AddAsync(user);
+            return;
         }
 
-        public void update(User user)
+        public void Update(User user)
         {
-
+            // Nothing
         }
 
 
-        public void delete(User user)
+        public void Delete(User user)
         {
             if (user == null)
             {
@@ -54,7 +55,7 @@ namespace ApiUser.Services
             _context.Users.Remove(user);
         }
 
-        public bool saveChanges()
+        public bool SaveChanges()
         {
             return (_context.SaveChanges() >= 0);
         }
